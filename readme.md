@@ -6,6 +6,7 @@ Repositório para armazenar exemplos / textos sobre o docker
 
 https://docs.docker.com/get-started/
 https://docs.docker.com/get-started/part2/#share-your-image
+https://github.com/cod3rcursos/curso-docker
 
 ## Conteúdo
 
