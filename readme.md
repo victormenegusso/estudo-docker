@@ -11,6 +11,7 @@ https://docs.docker.com/get-started/part2/#share-your-image
 
 - [Conceitos](conceitos.md)
 - [Comandos](comandos.md)
+- [Redes](redes.md)
 - [Problemas Durante o estudo](problemas.md)
 - [Notas](notas.md)
 
