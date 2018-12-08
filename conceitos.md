@@ -29,3 +29,7 @@
 ## Services
 
     https://docs.docker.com/get-started/part3/#introduction 
+
+## Coordenado Multiplos containers 
+
+Docker Compose -> arquivo que descreve varias imagens, e atraves dele podemos executar um ambiente completo, com imagens de banco de dados, imagens com a aplicação, etc.
