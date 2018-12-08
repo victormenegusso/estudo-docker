@@ -98,10 +98,47 @@ docker container stop {CONTAINER ID}
 
 ### Mapeamento de porta
 
-O mapeamento de portar entre o container e a máquina host é feito atraves da flag `-p {PORTA HOST}:{PORTA CONTAINER}` 
+O mapeamento de porta entre o container e a máquina host é feito atraves da flag `-p {PORTA HOST}:{PORTA CONTAINER}` 
 ```bash
 #exemplo
 docker container run -p 8080:80 nginx
+```
+
+### Mapeamento de volume
+
+O mapeamento de volume entre o container e a máquina host é feito atraves da flag `-v {PATH HOST}:{PATH CONTAINER}` 
+```bash
+#exemplo
+docker container run -p 8080:80 -v $(pwd)/html:/usr/share/nginx/html nginx
+```
+
+### Executar em modo daemon (background)
+
+O parâmetro -d do docker container
+run indica ao Docker para iniciar o container em background (modo daemon).
+
+
+```bash
+#exemplo
+docker container run -d --name ex-daemon-basic -p 8080:80 nginx
+```
+
+### Manipulação de containers em modo daemon
+
+```bash
+
+# listagens
+docker container ls
+docker container ls -a
+
+# retorna um json com todas informações do container
+docker container inspect
+
+# executa um comando no container
+docker container exec {CONTAINER NAME} {COMANDO}
+
+# visualiza o log do container
+docker container logs {CONTAINER NAME}
 ```
 
 ## Comandos para Services
