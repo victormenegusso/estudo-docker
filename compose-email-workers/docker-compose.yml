@@ -1,0 +1,15 @@
+version: '3'
+
+volumes:
+  # definindo um volume para o postgres
+  dados_postgres:
+
+services: 
+  db: 
+    image: postgres:9.6
+    volumes:
+      # Volume dos dados, 'dados_postgres' sendo referencido
+      - dados_postgres:/var/lib/postgresql/data
+      # Scripts | ./scripts/init.sql:/docker-entrypoint-initdb.d/init.sql -> padrão da imagem
+      - ./scripts:/scripts
+      - ./scripts/init.sql:/docker-entrypoint-initdb.d/init.sql

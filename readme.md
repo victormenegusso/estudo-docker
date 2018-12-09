@@ -26,3 +26,4 @@ https://github.com/cod3rcursos/curso-docker
 ## projetos 
 
 - [projeto simples de cadastro utilizando node/mongdb e um front](compose-node-mongo-front)
+- [projeto de envio de emails, com front/python/postgres/redis/workers](compose-email-workers)
