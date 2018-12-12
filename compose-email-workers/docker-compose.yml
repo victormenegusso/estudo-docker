@@ -1,8 +1,15 @@
 version: '3'
 
+# definição dos volumes
 volumes:
   # definindo um volume para o postgres
   dados_postgres:
+
+# definição das redes utilizadas
+networks:
+  banco:
+  web:
+  fila:
 
 services: 
   db: 
@@ -13,3 +20,58 @@ services:
       # Scripts | ./scripts/init.sql:/docker-entrypoint-initdb.d/init.sql -> padrão da imagem
       - ./scripts:/scripts
       - ./scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - banco
+  
+  frontend:
+    image: nginx:1.13
+    volumes:
+      # Site
+      - ./web:/usr/share/nginx/html/
+      # Configuração do proxy reverso
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - 80:80
+    networks:
+      - web
+
+    # serve para ajudar a orquestração, iniciando primeiramente os serviços que não possuem dependencia.
+    # e caso iniciamos o front, ele sabe que tem que iniciar o 'app' tambem
+    depends_on:
+      - app
+  
+  app:
+    image: python:3.6
+    volumes:
+      # Aplicação
+      - ./app:/app
+    working_dir: /app
+    command: bash ./app.sh
+    networks:
+      - banco
+      - web
+      - fila
+    depends_on:
+      - db
+      - queue
+    environment:
+      - DB_NAME=abc_sender
+  
+  queue:
+    image: redis:3.2
+    networks:
+      - fila
+  
+  worker:
+    # no lugar de usar uma imagem pronta, vai buildar o Dockefile dentro da pasta 'worker'
+    build: worker
+    volumes:
+      # Worker
+      - ./worker:/worker
+    working_dir: /worker
+    # passado para o ENTRYPOINT
+    command: worker.py
+    networks:
+      - fila
+    depends_on:
+      - queue
