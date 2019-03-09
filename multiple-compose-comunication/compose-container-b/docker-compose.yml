@@ -1,0 +1,12 @@
+version: '3.5'
+
+networks:
+  network_tests_comunication:
+    external: true
+
+services:
+  container-b:
+    image: alpine
+    command: sleep 1000
+    networks:
+      - network_tests_comunication
